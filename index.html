@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <style>
+        @font-face {
+            font-family: 'pf';
+            src: url('font/Ac437_Phoenix_BIOS.ttf') format('truetype');
+        }
+        
+        p {
+            font-size: 1vw;
+            text-rendering: optimizeSpeed;
+        }
+        
+        html {
+            cursor: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            font-family: 'pf', sans-serif;
+            color: white;
+            width: 100%;
+            max-width: 75%;
+            aspect-ratio: 4 / 3;
+            max-height: 100%;
+            overflow: auto;
+            font-size: 1vw;
+            padding: 1vw;
+            background-color: #0000aa;
+        }
+        /* Border characters */
+        
+        .top_title {
+            align-items: center;
+            margin-top: 0;
+            line-height: 1;
+            padding: 1vw;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .base {
+            height: 75%;
+            /* Set the height of the container as per your requirement */
+            border: 0.4vw solid transparent;
+            /* Border style, width, and color */
+            outline: 0.4vw double #ffffff;
+            /* Use the outline property to create the double-lined border */
+            box-sizing: border-box;
+            display: flex;
+        }
+        
+        .bottom {
+            padding: 0.5vw;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+        /* Adjust the width of each pane based on your preference */
+        
+        .left-pane,
+        .right-pane,
+        .mid-pane {
+            padding: 0.3vw;
+            flex: 1;
+        }
+        /* Optionally, you can add some styles to differentiate the panes */
+        
+        .left-pane {
+            flex: 3;
+            margin-left: 2vw;
+            margin-top: -0.4vw;
+            margin-bottom: -0.4vw;
+            flex-direction: column;
+            /* Align the menu items vertically */
+            position: relative;
+        }
+        
+        .mid-pane {
+            margin-left: 2vw;
+            margin-top: -0.4vw;
+            margin-bottom: -0.45vw;
+            flex: 2;
+            border-right: 0.2vw solid white;
+            box-sizing: border-box;
+            background-color: #00000000;
+        }
+        
+        .right-pane {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            padding-top: 0%;
+            padding-right: 0%;
+            height: 100%;
+        }
+        
+        .menu-item {
+            margin: 0;
+            padding: 0.5vw;
+            position: relative;
+            /* Add position: relative to enable positioning of pseudo-element */
+        }
+        
+        .input-item {
+            color: #FFFF55;
+            margin: 0;
+            padding: 0.5vw;
+            position: relative;
+            /* Add position: relative to enable positioning of pseudo-element */
+        }
+        
+        .menu-item::before {
+            content: "►";
+            /* The arrow symbol */
+            position: absolute;
+            left: -1.4vw;
+            color: #ffffff;
+            /* Set the color for the arrow */
+            opacity: 0;
+            /* Initially hide the arrow */
+        }
+        
+        .selected::before {
+            opacity: 1;
+            /* Show the arrow for the selected item */
+        }
+        
+        .selected-input {
+            position: relative;
+            padding: -5vw;
+            padding-left: -5vw;
+            z-index: 0;
+        }
+        
+        .selected-input::after {
+            content: "Press Enter";
+            position: absolute;
+            top: 0.4vw;
+            left: 1.3vw;
+            padding: 0vw 0vw;
+            /* Adjust padding as needed */
+            padding-top: 0.1vw;
+            padding-bottom: 0.1vw;
+            background-color: red;
+            color: white;
+            /* Set the text color to white for better visibility */
+            z-index: 1;
+            color: white;
+            /* Bring the pseudo-element above the text */
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0vw;
+            left: 0vw;
+            width: 100%;
+            height: 100%;
+            /* Adjust the height of the border as needed */
+            background-image: linear-gradient(to right, #000, transparent, transparent, transparent, transparent, transparent, #000);
+            z-index: 1;
+            /* Make the overlay sit above the body content */
+        }
+        
+        .overlay2 {
+            position: absolute;
+            top: 0vw;
+            left: 0vw;
+            width: 100%;
+            height: 100%;
+            /* Adjust the height of the border as needed */
+            background-image: linear-gradient(#000, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, #000);
+            z-index: 1;
+            /* Make the overlay sit above the body content */
+        }
+        
+        .top-pane,
+        .bottom-pane {
+            padding: 1vw;
+        }
+        
+        .top-pane {
+            text-align: center;
+            padding: 0%;
+            flex: 1;
+            margin-left: -0.4vw;
+            margin-right: -0.45vw;
+            border-bottom: 0.2vw solid white;
+            box-sizing: border-box;
+        }
+        
+        .bottom-pane {
+            flex: 10;
+        }
+        
+        .info {
+            /* OVERRIDE COLOR*/
+            color: #AAAAAA;
+        }
+    </style>
+    <script>
+        // Disable mouse clicks on the entire document
+        document.addEventListener('click', function(event) {
+            event.preventDefault();
+            return false;
+        });
+
+        // Disable right-click on the entire document
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            return false;
+        });
+        var ClientType;
+        (function(ClientType) {
+            ClientType[ClientType["mobile"] = 0] = "mobile";
+            ClientType[ClientType["desktop"] = 1] = "desktop";
+            ClientType[ClientType["ssr"] = 2] = "ssr";
+        })(ClientType || (ClientType = {}));
+
+        const GetClientType = () => {
+            let isAndroid = Boolean(window.navigator.userAgent.match(/Android/i));
+            let isIos = Boolean(window.navigator.userAgent.match(/iPhone|iPad|iPod/i));
+            let isOpera = Boolean(window.navigator.userAgent.match(/Opera Mini/i));
+            let isWindows = Boolean(window.navigator.userAgent.match(/IEMobile/i));
+            let isSSR = Boolean(window.navigator.userAgent.match(/SSR/i));
+            let clientType = ClientType.ssr;
+            if (Boolean(isAndroid || isIos || isOpera || isWindows))
+                clientType = ClientType.mobile;
+            else if (Boolean(!isSSR))
+                clientType = ClientType.desktop;
+            return clientType;
+        };
+
+        function executeOnLoad() {
+            var id = GetClientType();
+            var clientType;
+            if (id == 0) {
+                clientType = "Mobile";
+                window.location.href = "mobile.html";
+            }
+            if (id == 1) {
+                clientType = "Desktop";
+            }
+            console.log("Client Type:", clientType + " (" + id + ")");
+            const memoryGiB = navigator.deviceMemory;
+            const memoryKB = memoryGiB * 1024 * 1024;
+            const ramText = document.getElementById('mem');
+            ramText.textContent = memoryKB + " KB";
+
+            // Get the userAgent string
+            const userAgentString = window.navigator.userAgent;
+
+            // Define regular expressions to extract OS and CPU information
+            const osRegexes = {
+                windows: /Windows NT (\d+\.\d+)/,
+                mac: /Mac OS X (\d+([._]\d+)?([._]\d+)?)/,
+                linux: /Linux(?: (\w+))?/,
+                android: /Android (\d+(\.\d+)?)/,
+                ios: /(?:iPhone|iPad|iPod).*?OS (\d+[._]\d+[._]\d+)?/,
+            };
+
+            const cpuRegex = /(?:(Intel|AMD) ?)?[xX]?(86|64|86-64)/;
+
+            // Function to extract OS information
+            function extractOSInfo() {
+                for (const os in osRegexes) {
+                    const regex = osRegexes[os];
+                    const match = userAgentString.match(regex);
+                    if (match && match.length > 1) {
+                        return os === "windows" ? `Windows ${match[1]}` : match[0];
+                    }
+                }
+                return "Unknown OS";
+            }
+
+            // Function to extract CPU information
+            function extractCPUInfo() {
+                const match = userAgentString.match(cpuRegex);
+                if (match && match.length > 1) {
+                    return match[0];
+                }
+                return "Unknown CPU";
+            }
+
+            // Extract OS and CPU information
+            const osInfo = extractOSInfo();
+            const cpuInfo = extractCPUInfo();
+
+            const cpuText = document.getElementById('cpu');
+            cpuText.textContent = cpuInfo;
+
+            const osText = document.getElementById('os');
+            osText.textContent = osInfo;
+
+
+
+
+        }
+
+        let number = 0;
+
+        function incrementNumber() {
+            if (number < 5) {
+                number++;
+            }
+            updateNumberDisplay();
+        }
+
+        function decrementNumber() {
+            if (number > 0) {
+                number--;
+            }
+            updateNumberDisplay();
+        }
+
+        function updateNumberDisplay() {
+            removeAllSelected();
+            const element1 = document.getElementById(`menu-${number}`);
+            const element2 = document.getElementById(`item-${number}`);
+            element1.classList.add("selected");
+            element2.classList.add("selected-input");
+        }
+
+        // Add event listeners to the document for the keydown event
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowDown') {
+                incrementNumber();
+            } else if (event.key === 'ArrowUp') {
+                decrementNumber();
+            }
+        });
+
+        function removeAllSelected() {
+            for (let i = 0; i < 6; i++) {
+                const element1 = document.getElementById(`menu-${i}`);
+                const element2 = document.getElementById(`item-${i}`);
+                // Remove the "oldClass" from element1
+                element1.classList.remove("selected");
+                element2.classList.remove("selected-input");
+            }
+
+
+        }
+    </script>
+</head>
+
+<body onload="executeOnLoad()">
+
+    <div class="overlay"></div>
+    <div class="overlay2"></div>
+    <div class="container">
+        <div class="top_title">
+            <p>Welcome To My Website</p>
+            <p>Advanced CMOS Setup Utility - Copyright (C)- Railgun Software 1984-2004</p>
+        </div>
+        <div class="base">
+            <div class="left-pane">
+
+                <p class="menu-item selected" id="menu-0">About Me</p>
+                <p class="menu-item" id="menu-1">Socials</p>
+                <p class="menu-item" id="menu-2">Games/Other</p>
+                <p class="menu-item" id="menu-3">GitHub Repository Of This Page</p>
+                <p class="menu-item" id="menu-4">Projects (Not Much)</p>
+                <p class="menu-item" id="menu-5">CMOS BIOS Color Table</p>
+                <br>
+                <p class="menu-item info">Installed Memory</p>
+                <p class="menu-item info">CPU</p>
+                <p class="menu-item info">OS</p>
+            </div>
+            <div class="mid-pane">
+                <p class="input-item selected-input" id="item-0">[Press Enter]</p>
+                <p class="input-item" id="item-1">[Press Enter]</p>
+                <p class="input-item" id="item-2">[Press Enter]</p>
+                <p class="input-item" id="item-3">[Press Enter]</p>
+                <p class="input-item" id="item-4">[Press Enter]</p>
+                <p class="input-item" id="item-5">[Press Enter]</p>
+                <br>
+                <p class="input-item info" id="mem">ramText</p>
+                <p class="input-item info" id="cpu">cpuText</p>
+                <p class="input-item info" id="os">osText</p>
+            </div>
+            <div class="right-pane">
+                <div class="top-pane">
+                    <p>Item Help</p>
+                </div>
+                <div class="bottom-pane">
+                    <p>This is the content of the bottom pane.</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <p>↑↓:Move Enter:Select Alt:Toggle Cursor</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
