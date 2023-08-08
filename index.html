@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html class="cursor-hidden">
+<html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -409,10 +409,7 @@
             } else if (event.key === 'ArrowUp') {
                 decrementNumber();
             }
-            if (event.key === "v" || event.key === "V") {
-                cursorHidden = !cursorHidden;
-                updateCursorVisibility();
-            }
+
             if (event.key === "Enter") {
                 if (number == 0) {
                     window.location.href = "me.html";
@@ -520,7 +517,7 @@
             </div>
         </div>
         <div class="bottom">
-            <p>↑↓:Move | Enter:Select | V:Toggle Cursor</p>
+            <p>↑↓:Move | Enter:Select</p>
         </div>
     </div>
 
