@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
 
 <html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Welcome~</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <title>Welcome~</title>
     <style type="text/css">
         @font-face {
             font-family: 'pf';
@@ -40,7 +42,7 @@
         }
         
         .container {
-            font-family: 'pf', sans-serif;
+            font-family: 'pf';
             color: white;
             width: 100%;
             max-width: 75%;
@@ -251,13 +253,15 @@
                 clientType = ClientType.desktop;
             return clientType;
         };
+        let number = 0;
 
         function executeOnLoad() {
+            updateNumberDisplay();
             var id = GetClientType();
             var clientType;
             if (id == 0) {
                 clientType = "Mobile";
-               // window.location.href = "mobile.html";
+                window.location.href = "mobile.html";
             }
             if (id == 1) {
                 clientType = "Desktop";
@@ -266,7 +270,21 @@
             const memoryGiB = navigator.deviceMemory;
             const memoryKB = memoryGiB * 1024 * 1024;
             const ramText = document.getElementById('mem');
-            ramText.textContent = memoryKB + " KB";
+            const paeText = document.getElementById('pae');
+            let PAE = "";
+            if (memoryGiB == undefined) {
+                PAE = "Disabled";
+                ramText.textContent = "Not Supported";
+            } else {
+                if (memoryGiB > 4) {
+                    PAE = "Enabled";
+                } else {
+                    PAE = "Disabled";
+                }
+
+                ramText.textContent = memoryKB + " KB";
+            }
+            paeText.textContent = PAE;
 
             // Get the userAgent string
             const userAgentString = window.navigator.userAgent;
@@ -318,7 +336,6 @@
 
         }
 
-        let number = 0;
 
         function incrementNumber() {
             if (number < 5) {
@@ -338,8 +355,28 @@
             removeAllSelected();
             const element1 = document.getElementById(`menu-${number}`);
             const element2 = document.getElementById(`item-${number}`);
+            const element3 = document.getElementById("infoContent");
             element1.classList.add("selected");
             element2.classList.add("selected-input");
+
+            if (number == 0) {
+                element3.textContent = "Some stuff about me.";
+            }
+            if (number == 1) {
+                element3.textContent = "My Social links.";
+            }
+            if (number == 2) {
+                element3.textContent = "Links to my gaming profiles and others.";
+            }
+            if (number == 3) {
+                element3.textContent = "The GitHub Repository of this webpage.";
+            }
+            if (number == 4) {
+                element3.textContent = "Some projects im working on or did.";
+            }
+            if (number == 5) {
+                element3.textContent = "The CMOS BIOS Color Table (this and other following pages are also only colored by them).";
+            }
         }
 
         // Add event listeners to the document for the keydown event
@@ -385,7 +422,8 @@
                 <p class="menu-item" id="menu-5">CMOS BIOS Color Table</p>
                 <br>
                 <p class="menu-item info">Installed Memory</p>
-                <p class="menu-item info">CPU</p>
+                <p class="menu-item info">(PAE) Physical Address Extension</p>
+                <p class="menu-item info">CPU Architecture</p>
                 <p class="menu-item info">OS</p>
             </div>
             <div class="mid-pane">
@@ -397,6 +435,7 @@
                 <p class="input-item" id="item-5">[Press Enter]</p>
                 <br>
                 <p class="input-item info" id="mem">ramText</p>
+                <p class="input-item info" id="pae">paeStatus</p>
                 <p class="input-item info" id="cpu">cpuText</p>
                 <p class="input-item info" id="os">osText</p>
             </div>
@@ -405,7 +444,7 @@
                     <p>Item Help</p>
                 </div>
                 <div class="bottom-pane">
-                    <p>This is the content of the bottom pane.</p>
+                    <p id="infoContent">This is the content of the bottom pane.</p>
                 </div>
             </div>
         </div>
