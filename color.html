@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html class="cursor-hidden">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <title>CMOS BIOS Color Table</title>
+    <style type="text/css">
+        @font-face {
+            font-family: 'pf';
+            src: url('font/Ac437_Phoenix_BIOS.ttf') format('truetype');
+        }
+        
+        p {
+            font-size: 1vw;
+            text-rendering: optimizeSpeed;
+        }
+        
+        html.cursor-hidden {
+            cursor: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            font-family: 'pf';
+            color: white;
+            width: 100%;
+            max-width: 75%;
+            aspect-ratio: 4 / 3;
+            max-height: 100%;
+            overflow: auto;
+            font-size: 1vw;
+            padding: 1vw;
+            background-color: #0000aa;
+        }
+        /* Border characters */
+        
+        .top_title {
+            align-items: center;
+            margin-top: 0;
+            line-height: 1;
+            padding: 1vw;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .base {
+            height: 75%;
+            /* Set the height of the container as per your requirement */
+            border: 0.4vw solid transparent;
+            /* Border style, width, and color */
+            outline: 0.4vw double #ffffff;
+            /* Use the outline property to create the double-lined border */
+            box-sizing: border-box;
+            display: flex;
+        }
+        
+        .bottom {
+            padding: 0.5vw;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+        /* Adjust the width of each pane based on your preference */
+        
+        .left-pane {
+            padding: 0.3vw;
+            margin-left: 2vw;
+            margin-top: -0.4vw;
+            margin-bottom: -0.4vw;
+            flex-direction: column;
+            /* Align the menu items vertically */
+            position: relative;
+        }
+        
+        .mid-pane {
+            padding: 0.3vw;
+            margin-left: 0vw;
+            margin-top: -0.4vw;
+            margin-bottom: -0.4vw;
+            flex-direction: column;
+            /* Align the menu items vertically */
+            position: relative;
+        }
+        
+        .right-pane {
+            padding: 0.3vw;
+            margin-left: 0vw;
+            margin-top: -0.4vw;
+            margin-bottom: -0.4vw;
+            flex-direction: column;
+            /* Align the menu items vertically */
+            position: relative;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0vw;
+            left: 0vw;
+            width: 100%;
+            height: 100%;
+            /* Adjust the height of the border as needed */
+            background-image: linear-gradient(to right, #000, transparent, transparent, transparent, transparent, transparent, #000);
+            z-index: 1;
+            /* Make the overlay sit above the body content */
+        }
+        
+        .overlay2 {
+            position: absolute;
+            top: 0vw;
+            left: 0vw;
+            width: 100%;
+            height: 100%;
+            /* Adjust the height of the border as needed */
+            background-image: linear-gradient(#000, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, transparent, #000);
+            z-index: 1;
+            /* Make the overlay sit above the body content */
+        }
+        
+        .top-pane,
+        .bottom-pane {
+            padding: 1vw;
+        }
+        
+        .top-pane {
+            text-align: center;
+            padding: 0%;
+            flex: 1;
+            margin-left: -0.4vw;
+            margin-right: -0.45vw;
+            border-bottom: 0.2vw solid white;
+            box-sizing: border-box;
+        }
+        
+        .bottom-pane {
+            flex: 10;
+        }
+    </style>
+    <script type="text/javascript">
+        let cursorHidden = true;
+
+        // Disable mouse clicks on the entire document
+        document.addEventListener('click', function(event) {
+            event.preventDefault();
+            return false;
+        });
+
+        // Disable right-click on the entire document
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            return false;
+        });
+        var ClientType;
+        (function(ClientType) {
+            ClientType[ClientType["mobile"] = 0] = "mobile";
+            ClientType[ClientType["desktop"] = 1] = "desktop";
+            ClientType[ClientType["ssr"] = 2] = "ssr";
+        })(ClientType || (ClientType = {}));
+
+        const GetClientType = () => {
+            let isAndroid = Boolean(window.navigator.userAgent.match(/Android/i));
+            let isIos = Boolean(window.navigator.userAgent.match(/iPhone|iPad|iPod/i));
+            let isOpera = Boolean(window.navigator.userAgent.match(/Opera Mini/i));
+            let isWindows = Boolean(window.navigator.userAgent.match(/IEMobile/i));
+            let isSSR = Boolean(window.navigator.userAgent.match(/SSR/i));
+            let clientType = ClientType.ssr;
+            if (Boolean(isAndroid || isIos || isOpera || isWindows))
+                clientType = ClientType.mobile;
+            else if (Boolean(!isSSR))
+                clientType = ClientType.desktop;
+            return clientType;
+        };
+
+
+        function executeOnLoad() {
+
+            var id = GetClientType();
+            var clientType;
+            if (id == 0) {
+                clientType = "Mobile";
+                window.location.href = "mobile.html";
+            }
+            if (id == 1) {
+                clientType = "Desktop";
+            }
+            console.log("Client Type:", clientType + " (" + id + ")");
+
+        }
+
+
+
+
+        // Add event listeners to the document for the keydown event
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                //go back
+                window.location.href = "index.html";
+            }
+            if (event.key === "v" || event.key === "V") {
+                cursorHidden = !cursorHidden;
+                updateCursorVisibility();
+            }
+        });
+
+
+        function updateCursorVisibility() {
+            if (cursorHidden) {
+                document.documentElement.classList.add("cursor-hidden");
+            } else {
+                document.documentElement.classList.remove("cursor-hidden");
+            }
+        }
+    </script>
+</head>
+
+<body onload="executeOnLoad()">
+
+    <div class="overlay"></div>
+    <div class="overlay2"></div>
+    <div class="container">
+        <div class="top_title">
+            <p>CMOS Bios Color Table</p>
+        </div>
+        <div class="base">
+            <div class="left-pane">
+                <p class="menu-item">0 | Black</p>
+                <p class="menu-item">1 | Blue</p>
+                <p class="menu-item">2 | Green</p>
+                <p class="menu-item">3 | Cyan</p>
+                <p class="menu-item">4 | Red</p>
+                <p class="menu-item">5 | Magenta</p>
+                <p class="menu-item">6 | Brown</p>
+                <p class="menu-item">7 | Light Gray</p>
+                <p class="menu-item">8 | Dark Gray</p>
+                <p class="menu-item">9 | Light Blue</p>
+                <p class="menu-item">A | Light Green</p>
+                <p class="menu-item">B | Light Cyan</p>
+                <p class="menu-item">C | Light Red</p>
+                <p class="menu-item">D | Light Magenta</p>
+                <p class="menu-item">E | Yellow</p>
+                <p class="menu-item">F | White</p>
+            </div>
+            <div class="mid-pane">
+                <p class="menu-item" style="color:#000000;">████████████████████</p>
+                <p class="menu-item" style="color:#0000AA;">████████████████████</p>
+                <p class="menu-item" style="color:#00AA00;">████████████████████</p>
+                <p class="menu-item" style="color:#00AAAA;">████████████████████</p>
+                <p class="menu-item" style="color:#AA0000;">████████████████████</p>
+                <p class="menu-item" style="color:#AA00AA;">████████████████████</p>
+                <p class="menu-item" style="color:#AA5500;">████████████████████</p>
+                <p class="menu-item" style="color:#AAAAAA;">████████████████████</p>
+                <p class="menu-item" style="color:#555555;">████████████████████</p>
+                <p class="menu-item" style="color:#5555FF;">████████████████████</p>
+                <p class="menu-item" style="color:#55FF55;">████████████████████</p>
+                <p class="menu-item" style="color:#55FFFF;">████████████████████</p>
+                <p class="menu-item" style="color:#FF5555;">████████████████████</p>
+                <p class="menu-item" style="color:#FF55FF;">████████████████████</p>
+                <p class="menu-item" style="color:#FFFF55;">████████████████████</p>
+                <p class="menu-item" style="color:#FFFFFF;">████████████████████</p>
+            </div>
+            <div class="right-pane">
+                <p class="menu-item">#000000 (0, 0, 0)</p>
+                <p class="menu-item">#0000AA (0, 0, 170)</p>
+                <p class="menu-item">#00AA00 (0, 170, 0)</p>
+                <p class="menu-item">#00AAAA (0, 170, 170)</p>
+                <p class="menu-item">#AA0000 (170, 0, 0)</p>
+                <p class="menu-item">#AA00AA (170, 0, 170)</p>
+                <p class="menu-item">#AA5500 (170, 85, 0)</p>
+                <p class="menu-item">#AAAAAA (170, 170, 170)</p>
+                <p class="menu-item">#555555 (85, 85, 85)</p>
+                <p class="menu-item">#5555FF (85, 85, 255)</p>
+                <p class="menu-item">#55FF55 (85, 255, 85)</p>
+                <p class="menu-item">#55FFFF (85, 255, 255)</p>
+                <p class="menu-item">#FF5555 (255, 85, 85)</p>
+                <p class="menu-item">#FF55FF (255, 85, 255)</p>
+                <p class="menu-item">#FFFF55 (255, 255, 85)</p>
+                <p class="menu-item">#FFFFFF (255, 255, 255)</p>
+            </div>
+        </div>
+        <div class="bottom ">
+            <p>←:Back | V:Toggle Cursor</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

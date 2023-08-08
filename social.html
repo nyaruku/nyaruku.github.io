@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="img/icon.png">
-    <title>Welcome~</title>
+    <title>Socials</title>
     <style type="text/css">
         @font-face {
             font-family: 'pf';
@@ -286,70 +286,6 @@
                 clientType = "Desktop";
             }
             console.log("Client Type:", clientType + " (" + id + ")");
-            const memoryGiB = navigator.deviceMemory;
-            const memoryKB = memoryGiB * 1024 * 1024;
-            const ramText = document.getElementById('mem');
-            const paeText = document.getElementById('pae');
-            let PAE = "";
-            if (memoryGiB == undefined) {
-                PAE = "Disabled";
-                ramText.textContent = "Not Supported";
-            } else {
-                if (memoryGiB > 4) {
-                    PAE = "Enabled";
-                } else {
-                    PAE = "Disabled";
-                }
-
-                ramText.textContent = memoryKB + " KB";
-            }
-            paeText.textContent = PAE;
-
-            // Get the userAgent string
-            const userAgentString = window.navigator.userAgent;
-
-            // Define regular expressions to extract OS and CPU information
-            const osRegexes = {
-                windows: /Windows NT (\d+\.\d+)/,
-                mac: /Mac OS X (\d+([._]\d+)?([._]\d+)?)/,
-                linux: /Linux(?: (\w+))?/,
-                android: /Android (\d+(\.\d+)?)/,
-                ios: /(?:iPhone|iPad|iPod).*?OS (\d+[._]\d+[._]\d+)?/,
-            };
-
-            const cpuRegex = /(?:(Intel|AMD) ?)?[xX]?(86|64|86-64)/;
-
-            // Function to extract OS information
-            function extractOSInfo() {
-                for (const os in osRegexes) {
-                    const regex = osRegexes[os];
-                    const match = userAgentString.match(regex);
-                    if (match && match.length > 1) {
-                        return os === "windows" ? `Windows ${match[1]}` : match[0];
-                    }
-                }
-                return "Unknown OS";
-            }
-
-            // Function to extract CPU information
-            function extractCPUInfo() {
-                const match = userAgentString.match(cpuRegex);
-                if (match && match.length > 1) {
-                    return match[0];
-                }
-                return "Unknown CPU";
-            }
-
-            // Extract OS and CPU information
-            const osInfo = extractOSInfo();
-            const cpuInfo = extractCPUInfo();
-
-            const cpuText = document.getElementById('cpu');
-            cpuText.textContent = cpuInfo;
-
-            const osText = document.getElementById('os');
-            osText.textContent = osInfo;
-
 
 
 
@@ -358,8 +294,10 @@
 
         function incrementNumber() {
 
+
             number++;
-            if (number == 5) {
+
+            if (number == 4) {
                 number = 0;
             }
             updateNumberDisplay();
@@ -367,9 +305,11 @@
 
         function decrementNumber() {
 
+
             number--;
+
             if (number == -1) {
-                number = 4;
+                number = 3;
             }
             updateNumberDisplay();
         }
@@ -383,27 +323,25 @@
             element2.classList.add("selected-input");
 
             if (number == 0) {
-                element3.textContent = "Some stuff about me.";
+                element3.textContent = "My Youtube Channel.";
             }
             if (number == 1) {
-                element3.textContent = "My Social links.";
+                element3.textContent = "My Twitter Profile.";
             }
             if (number == 2) {
-                element3.textContent = "Links to my gaming profiles and others.";
+                element3.textContent = "My Twitch Channel.";
             }
             if (number == 3) {
-                element3.textContent = "The GitHub Repository of this webpage.";
-            }
-            /*  if (number == 4) {
-                  element3.textContent = "Some projects im working on or did.";
-              }*/
-            if (number == 4) {
-                element3.textContent = "The CMOS BIOS Color Table (this and other following pages are also only colored by them).";
+                element3.textContent = "My Reddit Profile.";
             }
         }
 
         // Add event listeners to the document for the keydown event
         document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                //go back
+                window.location.href = "index.html";
+            }
             if (event.key === 'ArrowDown') {
                 incrementNumber();
             } else if (event.key === 'ArrowUp') {
@@ -415,26 +353,22 @@
             }
             if (event.key === "Enter") {
                 if (number == 0) {
-                    window.location.href = "me.html";
+                    window.location.href = "https://www.youtube.com/channel/UCyt-2MRSn9qG6fmuNqebt2Q";
                 }
                 if (number == 1) {
-                    window.location.href = "social.html";
+                    window.location.href = "https://twitter.com/Railgun_osu";
                 }
                 if (number == 2) {
-                    window.location.href = "social2.html";
+                    window.location.href = "https://www.twitch.tv/railgun_osu";
                 }
                 if (number == 3) {
-                    window.location.href = "https://github.com/nyaruku/nyaruku.github.io";
-                }
-
-                if (number == 4) {
-                    window.location.href = "color.html";
+                    window.location.href = "https://www.reddit.com/user/FUBUKIIIIII";
                 }
             }
         });
 
         function removeAllSelected() {
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 4; i++) {
                 const element1 = document.getElementById(`menu-${i}`);
                 const element2 = document.getElementById(`item-${i}`);
                 // Remove the "oldClass" from element1
@@ -459,39 +393,17 @@
     <div class="overlay2"></div>
     <div class="container">
         <div class="top_title">
-            <p>Welcome To My Website</p>
-            <p>Advanced CMOS Setup Utility - ImNotAFuckingCompany 1984-2004</p>
+            <p>Socials</p>
         </div>
         <div class="base">
             <div class="left-pane">
 
-                <p class="menu-item selected" id="menu-0">About Me</p>
-                <p class="menu-item" id="menu-1">Socials</p>
-                <p class="menu-item" id="menu-2">Games/Other</p>
-                <p class="menu-item" id="menu-3">GitHub Repository Of This Page</p>
-                <p class="menu-item info">Projects (Not Much)</p>
-                <p class="menu-item" id="menu-4">CMOS BIOS Color Table</p>
+                <p class="menu-item selected" id="menu-0">Youtube</p>
+                <p class="menu-item" id="menu-1">Twitter</p>
+                <p class="menu-item" id="menu-2">Twitch</p>
+                <p class="menu-item" id="menu-3">Reddit</p>
                 <br>
-                <p class="menu-item info">Installed Memory</p>
-                <p class="menu-item info">(PAE) Physical Address Extension</p>
-                <p class="menu-item info">CPU Architecture</p>
-                <p class="menu-item info">OS</p>
-                <br> <br>
-                <p class="menu-item">Page Counter:</p>
-                <img src="https://count.getloli.com/get/@NyarukuWebpageCounter?theme=rule34" alt="PageCounter" />
-                <div class="inner-bottom">
-                    <p>
-                        <a href="http://validator.w3.org/check?uri=referer">
-                            <img style="border:0;width:6vw;height:2.11vw" src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict"></a>
-                    </p>
-                    <p>
-                        <a href="https://jigsaw.w3.org/css-validator/check/referer">
-                            <img style="border:0;width:6vw;height:2.11vw" src="https://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a>
-                    </p>
-                </div>
-                <div class="inner-bottom-content">
-                    <p class="note">This Page and others are HTML 4.01 Strict validated :)</p>
-                </div>
+
 
             </div>
             <div class="mid-pane">
@@ -499,13 +411,6 @@
                 <p class="input-item" id="item-1">[Press Enter]</p>
                 <p class="input-item" id="item-2">[Press Enter]</p>
                 <p class="input-item" id="item-3">[Press Enter]</p>
-                <p class="input-item info">[Press Enter]</p>
-                <p class="input-item" id="item-4">[Press Enter]</p>
-                <br>
-                <p class="input-item info" id="mem">ramText</p>
-                <p class="input-item info" id="pae">paeStatus</p>
-                <p class="input-item info" id="cpu">cpuText</p>
-                <p class="input-item info" id="os">osText</p>
 
 
 
@@ -520,7 +425,7 @@
             </div>
         </div>
         <div class="bottom">
-            <p>↑↓:Move | Enter:Select | V:Toggle Cursor</p>
+            <p>←:Back | ↑↓:Move | Enter:Select | V:Toggle Cursor</p>
         </div>
     </div>
 
